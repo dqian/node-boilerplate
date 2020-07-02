@@ -27,8 +27,7 @@ const currentServer = http.createServer({}, server)
 // const currentServer = https.createServer(options, server)
 
 server.get('/', function (req, res) {
-  res.writeHead(200);
-  res.end("hello world\n");
+  res.status(200).json({ hello: "world"});
 });
 
 currentServer.listen(PORT, onStart)
