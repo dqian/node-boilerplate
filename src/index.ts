@@ -3,19 +3,23 @@ import * as https from 'https'
 import * as http from 'http'
 import config from '~/config'
 import { getConnection } from './packages/database'
+import "reflect-metadata"
 import server from './server'
 
 const PORT = config.SERVER_PORT || '3000'
 
 async function onStart(): Promise<any> {
   try {
+    // initialize database connection
     await getConnection()
-    console.log(`Server up and running on http://localhost:${PORT}`)
+    console.log(`Database successfully connected.`)
   } catch (err) {
     // tslint:disable-next-line:no-console
     console.log(err)
     throw err
   }
+
+  console.log(`Server up and running on port ${PORT}.`)
 }
 
 // const options = {
@@ -25,9 +29,5 @@ async function onStart(): Promise<any> {
 
 const currentServer = http.createServer({}, server)
 // const currentServer = https.createServer(options, server)
-
-server.get('/', function (req, res) {
-  res.status(200).json({ hello: "world"});
-});
 
 currentServer.listen(PORT, onStart)

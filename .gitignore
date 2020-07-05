@@ -11,3 +11,4 @@ temp/
 !.env.example
 *.cert
 *.key
+.DS_Store
