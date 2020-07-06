@@ -1,3 +1,42 @@
+# Node Boilerplate (PostgreSQL, Typescript, Node.js, Express.js)
+
+
+## Prerequisites
+1. [NVM](https://github.com/nvm-sh/nvm#installing-and-updating)
+2. [Homebrew](https://brew.sh/)
+
+## Getting Started (Local Setup)
+##### 1. Install Node
+- `nvm install node`
+##### 2. Install Node Modules
+- `yarn`
+##### 3. Install Postgres
+- `brew update`
+- `brew install postgresql`
+- `brew services start postgresql`
+##### 4. Create Local Database
+- `createdb my_database_name`
+##### 5. Initialize Environment Variables (local)
+- `cp .env.example .env.local`
+- update `DB_NAME` in `.env.local` to be the name of your database in **#3**
+##### 6. Run Database Migrations
+- `yarn run setup:local`
+##### 7. Start Local Server
+- `npm run dev`
+```
+Database successfully connected.
+Server up and running on port 5000.
+```
+
+
+
+## Resources
+- [original boilerplate](https://github.com/leonardorb/backend-postgres-typescript-node-express)
+- [TypeORM](https://github.com/typeorm/typeorm) 
+
+------
+### OLD README BELOW
+
 # PostgreSQL, TypeScript, Node.js and Express.js Stack
 
 ## Overview
