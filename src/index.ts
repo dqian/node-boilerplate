@@ -2,7 +2,9 @@ import * as fs from 'fs'
 import * as https from 'https'
 import * as http from 'http'
 import config from '~/config'
+import './packages/api/auth'
 import { getConnection } from './packages/database'
+
 import "reflect-metadata"
 import server from './server'
 

@@ -1,12 +1,10 @@
 import { NextFunction, Request, Response } from 'express'
 import * as httpStatus from 'http-status'
-import { User } from '~/packages/database/models/user'
-import { getConnection } from 'typeorm'
+import { UsersTable } from '~/packages/database/tables'
 
 export const list = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
   try {
-    const users = await getConnection()
-      .getRepository(User)
+    const users = await UsersTable
       .createQueryBuilder('user')
       .getMany()
 

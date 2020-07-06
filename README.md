@@ -32,7 +32,9 @@ Server up and running on port 5000.
 
 ## Resources
 - [original boilerplate](https://github.com/leonardorb/backend-postgres-typescript-node-express)
-- [TypeORM](https://github.com/typeorm/typeorm) 
+- [TypeORM](https://github.com/typeorm/typeorm)
+- [Passport](http://www.passportjs.org/)
+- [Passport-JWT](https://itnext.io/implementing-json-web-tokens-passport-js-in-a-javascript-application-with-react-b86b1f313436)
 
 ------
 ### OLD README BELOW
