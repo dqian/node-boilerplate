@@ -6,6 +6,7 @@
     "dev": "nodemon",
     "lint": "eslint . --ext .ts",
     "migration:create": "NODE_ENV=local npm run typeorm -- migration:create -n",
+    "migration:generate": "NODE_ENV=local npm run typeorm -- migration:generate -n",
     "setup:local": "NODE_ENV=local npm run typeorm -- migration:run",
     "setup:test": "NODE_ENV=test npm run typeorm -- migration:run",
     "test": "NODE_ENV=test jest -i",

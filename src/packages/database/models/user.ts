@@ -1,24 +1,24 @@
 // tslint:disable:variable-name
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Timestamp, getConnection } from 'typeorm'
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Timestamp, getConnection, Unique, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm'
 import config from '~/config'
 
 @Entity(`${config.DB.MAIN_SCHEMA}.users`)
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   public id: string
 
-  @Column('varchar')
+  @Column({ type: "varchar", length: 255, unique: true })
   public email: string
 
-  @Column('varchar')
+  @Column({ type: "varchar", length: 255 })
   public password_hash: string
 
-  @Column('timestamp with time zone')
+  @CreateDateColumn()
   public created_at: Timestamp
 
-  @Column('timestamp with time zone')
+  @UpdateDateColumn()
   public updated_at: Timestamp
 
-  @Column('timestamp with time zone')
+  @DeleteDateColumn()
   public deleted_at: Timestamp
 }
