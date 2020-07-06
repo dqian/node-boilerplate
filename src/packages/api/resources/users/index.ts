@@ -1,9 +1,8 @@
 import Router from 'express-promise-router'
-import { list, login } from '~/packages/api/resources/users/controller'
+import { info } from '~/packages/api/resources/users/controller'
 
 const router = Router()
 
-router.route('/').get(list)
-router.route('/login').get(login)
+router.route('/info').get(info)
 
 export default router

@@ -11,6 +11,7 @@ import config from '~/config'
 
 import { handleErrors } from '~/packages/api/middlewares/error'
 import router from '~/packages/api/router'
+import * as passport from "passport";
 
 const app = express()
 
@@ -32,7 +33,7 @@ app.use(helmet())
 app.use(cors())
 app.use(compression())
 app.use(bodyParser.json())
-
+app.use(passport.initialize());
 app.use(router)
 
 app.use(handleErrors)

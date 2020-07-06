@@ -1,23 +1,36 @@
 import config from '~/config'
 import bcrypt from 'bcrypt';
-import passport from 'passport';
+import * as passport from "passport";
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import { UsersTable } from '../database/tables';
 import normalizeEmail from 'normalize-email';
+import { getConnection } from 'typeorm';
+import { User } from '../database/models/user';
 
 const BCRYPT_SALT_ROUNDS = 12;
+const JWT_AUTH_HEADER = "JWT";
+const JWT_TOKEN_MAX_AGE = "7d";
+
+const USERNAME_FIELD = 'email';
+const PASSWORD_FIELD = 'password';
+
+export enum PassportAction {
+  Register = 'register',
+  Login = 'login',
+  JWT = 'jwt',
+}
 
 passport.use(
-  'register',
+  PassportAction.Register,
   new LocalStrategy(
     {
-      usernameField: 'email',
-      passwordField: 'password',
+      usernameField: USERNAME_FIELD,
+      passwordField: PASSWORD_FIELD,
       session: false,
     },
     async (email: string, password: string, done) => {
       try {
+        const UsersTable = getConnection().getRepository(User);
         const normalizedEmail = normalizeEmail(email);
         const existingUser = await UsersTable.findOne({ email: normalizedEmail });
         if (existingUser) {
@@ -41,15 +54,16 @@ passport.use(
 );
 
 passport.use(
-  'login',
+  PassportAction.Login,
   new LocalStrategy(
     {
-      usernameField: 'email',
-      passwordField: 'password',
+      usernameField: USERNAME_FIELD,
+      passwordField: PASSWORD_FIELD,
       session: false,
     },
     async (email: string, password: string, done) => {
       try {
+        const UsersTable = getConnection().getRepository(User);
         const normalizedEmail = normalizeEmail(email);
         const user = await UsersTable.findOne({ email: normalizedEmail });
 
@@ -73,17 +87,18 @@ passport.use(
 );
 
 const jwtOptions = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('JWT'),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme(JWT_AUTH_HEADER),
   secretOrKey: config.AUTH.TOKEN_SECRET,
   jsonWebTokenOptions: {
-    maxAge: "7d",
+    maxAge: JWT_TOKEN_MAX_AGE,
   },
 };
 
 passport.use(
-  'jwt',
+  PassportAction.JWT,
   new JwtStrategy(jwtOptions, async (jwtPayload, done) => {
     try {
+      const UsersTable = getConnection().getRepository(User);
       const user = await UsersTable.findOne(jwtPayload.id);
       if (user) {
         done(null, user);

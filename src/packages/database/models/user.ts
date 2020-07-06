@@ -21,4 +21,11 @@ export class User extends BaseEntity {
 
   @DeleteDateColumn()
   public deleted_at: Timestamp
+
+  public info() {
+    return {
+      id: this.id,
+      email: this.email,
+    }
+  }
 }
