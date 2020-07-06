@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import * as httpStatus from 'http-status'
-import passport from 'passport';
+import * as passport from 'passport';
 import { PassportAction } from '../../auth';
 import { User } from '~/packages/database/models/user';
 
@@ -13,7 +13,7 @@ export const info = async (req: Request, res: Response, next: NextFunction): Pro
       console.log(info.message);
       res.send(info.message);
     } else {
-      res.status(200).send(user.info());
+      res.status(httpStatus.OK).send(user.info());
     }
   })(req, res, next);
 }

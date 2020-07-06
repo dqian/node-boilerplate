@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from 'express'
 import config from '~/config';
-import jwt from 'jsonwebtoken';
-import passport from 'passport';
+import * as jwt from 'jsonwebtoken';
+import * as passport from 'passport';
 import { PassportAction } from '../../auth';
 import { User } from '~/packages/database/models/user';
+import * as httpStatus from 'http-status'
 
 export const login = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
   try {
@@ -19,7 +20,7 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
         } else {
           req.logIn(user, err => {
             const token = jwt.sign({ id: user.id }, config.AUTH.TOKEN_SECRET);
-            res.status(200).send({
+            res.status(httpStatus.OK).send({
               auth: true,
               token: token,
               message: 'User authenticated.',
@@ -46,10 +47,11 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
       } else {
         req.logIn(user, err => {
           const token = jwt.sign({ id: user.id }, config.AUTH.TOKEN_SECRET);
-          res.status(200).send({
+          res.status(httpStatus.OK).send({
             auth: true,
             token: token,
-            message: 'User registerd and authenticated.',
+            message: 'User registered and authenticated.',
+            user: user.info(),
           });
         });
       }

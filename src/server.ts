@@ -32,6 +32,7 @@ app.use(
 app.use(helmet())
 app.use(cors())
 app.use(compression())
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(passport.initialize());
 app.use(router)

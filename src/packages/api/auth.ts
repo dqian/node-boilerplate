@@ -1,11 +1,11 @@
 import config from '~/config'
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import * as passport from "passport";
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import normalizeEmail from 'normalize-email';
 import { getConnection } from 'typeorm';
 import { User } from '../database/models/user';
+const normalizeEmail = require("normalize-email");
 
 const BCRYPT_SALT_ROUNDS = 12;
 const JWT_AUTH_HEADER = "JWT";
