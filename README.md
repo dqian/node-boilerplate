@@ -18,14 +18,18 @@
 - `brew update`
 - `brew install postgresql`
 - `brew services start postgresql`
-##### 4. Create Local Database
+##### 4. Identify your Postgres user
+- `psql`
+- `\du`
+- take a "superuser" role (often your computer user or just `postgres`) and assign it to `DB_USER` in `.env.local`
+##### 5. Create Local Database
 - `createdb my_database_name`
-##### 5. Initialize Environment Variables (local)
+##### 6. Initialize Environment Variables (local)
 - `cp .env.example .env.local`
 - update `DB_NAME` in `.env.local` to be the name of your database in **#3**
-##### 6. Run Database Migrations
+##### 7. Run Database Migrations
 - `yarn run setup:local`
-##### 7. Start Local Server
+##### 8. Start Local Server
 - `npm run dev`
 ```
 Database successfully connected.
