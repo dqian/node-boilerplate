@@ -9,7 +9,11 @@
 ##### 1. Install Node
 - `nvm install node`
 ##### 2. Install Node Modules
+
+- `brew update`
+- `brew install yarn`
 - `yarn`
+
 ##### 3. Install Postgres
 - `brew update`
 - `brew install postgresql`
