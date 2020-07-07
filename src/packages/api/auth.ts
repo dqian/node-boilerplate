@@ -9,7 +9,7 @@ const normalizeEmail = require("normalize-email");
 
 const BCRYPT_SALT_ROUNDS = 12;
 const JWT_AUTH_HEADER = "JWT";
-const JWT_TOKEN_MAX_AGE = "7d";
+const JWT_TOKEN_MAX_AGE = config.AUTH.TOKEN_EXPIRATION_TIME || "7d";
 
 const USERNAME_FIELD = 'email';
 const PASSWORD_FIELD = 'password';

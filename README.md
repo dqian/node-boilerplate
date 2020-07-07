@@ -9,11 +9,9 @@
 ##### 1. Install Node
 - `nvm install node`
 ##### 2. Install Node Modules
-
 - `brew update`
 - `brew install yarn`
 - `yarn`
-
 ##### 3. Install Postgres
 - `brew update`
 - `brew install postgresql`
@@ -36,13 +34,12 @@ Database successfully connected.
 Server up and running on port 5000.
 ```
 
-
-
 ## Resources
 - [original boilerplate](https://github.com/leonardorb/backend-postgres-typescript-node-express)
 - [TypeORM](https://github.com/typeorm/typeorm)
 - [Passport](http://www.passportjs.org/)
 - [Passport-JWT](https://itnext.io/implementing-json-web-tokens-passport-js-in-a-javascript-application-with-react-b86b1f313436)
+- [AWS ECR/ECS Deployment](https://dev.to/mubbashir10/containerize-react-app-with-docker-for-production-572b)
 
 ------
 ### OLD README BELOW

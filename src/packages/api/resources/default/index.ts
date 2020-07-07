@@ -3,6 +3,6 @@ import { health } from '~/packages/api/resources/default/controller'
 
 const router = Router()
 
-router.route('/').get(health)
+router.route('/health').get(health)
 
 export default router
