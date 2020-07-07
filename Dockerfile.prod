@@ -4,9 +4,11 @@ COPY ./package.json .
 COPY ./yarn.lock .
 RUN yarn install --production=true
 COPY ./src ./src
+COPY ./deployment ./deployment
 COPY ./.env.production ./.env.production
+COPY ./.env.example ./.env.example
 COPY ./ormconfig.ts ./ormconfig.ts
 COPY ./nodemon.json ./nodemon.json
 COPY ./tsconfig.json ./tsconfig.json
 EXPOSE 80
-CMD [ "yarn", "run", "setup:prod", "&&", "yarn", "run", "prod"]
+CMD yarn run setup:prod && yarn run prod

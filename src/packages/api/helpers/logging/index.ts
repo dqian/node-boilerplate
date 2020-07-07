@@ -20,14 +20,14 @@ const productionFormat = format.combine(format.timestamp(), format.align(), form
 
 let loggerOptions: LoggerOptions
 if (config.NODE_ENV === 'production') {
-  loggerOptions = {
-    format: productionFormat,
-    level: config.LOGGING.LEVEL,
-    transports: [
-      new transports.File({ filename: config.LOGGING.ERROR_FILE, level: 'error' }),
-      new transports.File({ filename: config.LOGGING.COMBINED_FILE }),
-    ],
-  }
+  // loggerOptions = {
+  //   format: productionFormat,
+  //   level: config.LOGGING.LEVEL,
+  //   transports: [
+  //     new transports.File({ filename: config.LOGGING.ERROR_FILE, level: 'error' }),
+  //     new transports.File({ filename: config.LOGGING.COMBINED_FILE }),
+  //   ],
+  // }
 } else {
   loggerOptions = {
     format: developmentFormat,
