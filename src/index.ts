@@ -11,6 +11,7 @@ import server from './server'
 const PORT = config.SERVER_PORT || '3000'
 
 async function onStart(): Promise<any> {
+  console.log(`Version 1.3`)
   try {
     // initialize database connection
     await getConnection()
