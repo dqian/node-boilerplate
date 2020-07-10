@@ -24,8 +24,9 @@ if (config.NODE_ENV === 'production') {
     format: productionFormat,
     level: config.LOGGING.LEVEL,
     transports: [
-      new transports.File({ filename: config.LOGGING.ERROR_FILE, level: 'error' }),
-      new transports.File({ filename: config.LOGGING.COMBINED_FILE }),
+      new transports.Console(),
+      // new transports.File({ filename: config.LOGGING.ERROR_FILE, level: 'error' }),
+      // new transports.File({ filename: config.LOGGING.COMBINED_FILE }),
     ],
   }
 } else {

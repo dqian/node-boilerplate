@@ -1,19 +1,13 @@
 import * as dotEnvSafe from 'dotenv-safe'
 import * as path from 'path'
 
-if (process.env.NODE_ENV !== 'production') {
-  let envPath = '.env'
+const envPath = `.env.${process.env.NODE_ENV}`
 
-  if (process.env.NODE_ENV) {
-    envPath = `${envPath}.${process.env.NODE_ENV}`
-  }
-
-  dotEnvSafe.config({
-    allowEmptyValues: true,
-    example: path.resolve(__dirname, '../../.env.example'),
-    path: path.resolve(process.cwd(), envPath),
-  })
-}
+dotEnvSafe.config({
+  allowEmptyValues: true,
+  example: path.resolve(__dirname, '../../.env.example'),
+  path: path.resolve(process.cwd(), envPath),
+})
 
 interface Config {
   readonly AUTH: {

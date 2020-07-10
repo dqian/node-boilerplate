@@ -12,3 +12,4 @@ temp/
 *.cert
 *.key
 .DS_Store
+*.pem
