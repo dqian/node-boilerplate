@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import * as httpStatus from 'http-status'
-import { getConnection } from 'typeorm';
+import { getConnection, createConnection, getConnectionOptions } from 'typeorm';
 import { User } from '~/packages/database/models/user';
 
 export const health = async (req: Request, res: Response, next: NextFunction): Promise<any> => {

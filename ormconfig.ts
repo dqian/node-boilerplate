@@ -20,6 +20,4 @@ const connectionOptions: ConnectionOptions = {
   migrations: ['src/packages/database/migrations/*.ts'],
 }
 
-console.log(connectionOptions);
-
 module.exports = connectionOptions
