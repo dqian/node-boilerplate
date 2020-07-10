@@ -11,4 +11,5 @@ COPY ./ormconfig.ts ./ormconfig.ts
 COPY ./nodemon.json ./nodemon.json
 COPY ./tsconfig.json ./tsconfig.json
 EXPOSE 80
-CMD yarn run setup:prod && yarn run prod
+RUN yarn run build
+CMD yarn run prod

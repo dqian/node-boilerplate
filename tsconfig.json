@@ -15,4 +15,7 @@
     },
     "sourceMap": true
   },
+  "exclude": [
+    "src/__tests__/**/*.ts"
+  ]
 }
