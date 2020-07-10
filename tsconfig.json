@@ -10,9 +10,9 @@
     "outDir": "./build",
     "paths": {
       "~/*": [
-        "src/*"
+        "./src/*"
       ]
     },
     "sourceMap": true
-  }
+  },
 }

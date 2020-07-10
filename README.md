@@ -12,6 +12,7 @@
 - `brew update`
 - `brew install yarn`
 - `yarn`
+- `yarn global add typescript`
 ##### 3. Install Postgres
 - `brew update`
 - `brew install postgresql`
