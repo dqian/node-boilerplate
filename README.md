@@ -61,10 +61,12 @@ Server up and running on port 5000.
 - populate the `DB_` variables with your RDS info
 - populate the `AWS_` variables with your ECR repository, ECS cluster, and ECS service info
 - feel free to generate a random secure string for `AUTH_TOKEN_SECRET` as well
-##### 10. Deploy to ECR repository
+##### 10. Run migrations on production DB
+- `yarn run setup:prod` 
+##### 11. Deploy to ECR repository
 - `sh deployment/prod-deploy-aws.sh`
 - press `q` when the cluster schema appears once deployment is done to return to your terminal
-##### 11. Monitor ECS service task and verify ELB DNS 
+##### 12. Monitor ECS service task and verify ELB DNS 
 - From your [ECS Cluster dashboard](https://us-east-2.console.aws.amazon.com/ecs/home?region=us-east-2#/clusters), navigate into your service and open the **Tasks** tab. From here, you can wait for your task to reach "RUNNING" status and/or click into the task and view logs.
 - Once running, you can type in your load balancer's DNS name into a browser to reach your server. Try checking out the `/health` endpoint.
 
