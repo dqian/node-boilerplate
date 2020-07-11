@@ -35,6 +35,39 @@ Database successfully connected.
 Server up and running on port 5000.
 ```
 
+## Production Deployment
+##### 1. Install Docker
+- [Docker installation](https://docs.docker.com/get-docker/)
+##### 2. Acquire AWS console account and access key/secret if necessary
+- [Sign up here](https://portal.aws.amazon.com/billing/signup?redirect_url=https%3A%2F%2Faws.amazon.com%2Fregistration-confirmation#/start)
+- Login and open the dropdown on your name in the upper right, then click **My Security Credentials**
+- Open the **Access keys (access key ID and secret access key)** accordion tab and click **Create New Access Key**
+- In the modal that appears, click **Show Access Key** and store the *Access Key ID* and *Secret Access Key* in a secure place for later
+##### 3. Install AWS CLI and configure with your account
+- [AWS CLIv2 installation](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
+- run `aws configure` in your terminal and input the *Access Key ID* and *Secret Access Key* from the previous step. Leave default region (`us-east-2`) and default output format as is and progress by pressing Enter until done.
+##### 4. Create RDS Postgres database
+- [WIKI: AWS RDS Postgres DB](https://github.com/dqian/node-boilerplate/wiki/AWS-RDS-Postgres-DB)
+##### 5. Create ECR repository
+- [WIKI: AWS ECR Repository](https://github.com/dqian/node-boilerplate/wiki/AWS-ECR-Repository)
+##### 6. Create ECS cluster and task definition
+- [WIKI: AWS ECR Cluster and Task Definition](https://github.com/dqian/node-boilerplate/wiki/AWS-ECS-Cluster-and-Task-Definition)
+##### 7. Create EC2 load balancer (ELB)
+- [WIKI: AWS EC2 Load Balancer](https://github.com/dqian/node-boilerplate/wiki/AWS-EC2-Load-Balancer)
+##### 8. Create ECS service in cluster
+- [WIKI: AWS ECS Cluster Service](https://github.com/dqian/node-boilerplate/wiki/AWS-ECS-Cluster-Service)
+##### 9. Create .env.production
+- `cp .env.example .env.production`
+- populate the `DB_` variables with your RDS info
+- populate the `AWS_` variables with your ECR repository, ECS cluster, and ECS service info
+- feel free to generate a random secure string for `AUTH_TOKEN_SECRET` as well
+##### 10. Deploy to ECR repository
+- `sh deployment/prod-deploy-aws.sh`
+- press `q` when the cluster schema appears once deployment is done to return to your terminal
+##### 11. Monitor ECS service task and verify ELB DNS 
+- From your [ECS Cluster dashboard](https://us-east-2.console.aws.amazon.com/ecs/home?region=us-east-2#/clusters), navigate into your service and open the **Tasks** tab. From here, you can wait for your task to reach "RUNNING" status and/or click into the task and view logs.
+- Once running, you can type in your load balancer's DNS name into a browser to reach your server. Try checking out the `/health` endpoint.
+
 ## Resources
 - [original boilerplate](https://github.com/leonardorb/backend-postgres-typescript-node-express)
 - [TypeORM](https://github.com/typeorm/typeorm)
