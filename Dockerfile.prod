@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:12 as build
 WORKDIR /app
 COPY ./package.json .
 COPY ./yarn.lock .
@@ -9,7 +9,6 @@ COPY ./.env.example ./.env.example
 COPY ./ormconfig.ts ./ormconfig.ts
 COPY ./nodemon.json ./nodemon.json
 COPY ./tsconfig.json ./tsconfig.json
-EXPOSE 80
 RUN yarn install --production=true
-RUN yarn run build
-CMD yarn run prod
+RUN yarn build
+CMD yarn prod

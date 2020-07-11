@@ -1,6 +1,5 @@
 # Node Boilerplate (PostgreSQL, Typescript, Node.js, Express.js)
 
-
 ## Prerequisites
 1. [NVM](https://github.com/nvm-sh/nvm#installing-and-updating)
 2. [Homebrew](https://brew.sh/)
@@ -27,9 +26,9 @@
 - `cp .env.example .env.local`
 - update `DB_NAME` in `.env.local` to be the name of your database in **#5**
 ##### 7. Run Database Migrations
-- `yarn run setup:local`
+- `yarn setup:local`
 ##### 8. Start Local Server
-- `npm run dev`
+- `yarn dev`
 ```
 Database successfully connected.
 Server up and running on port 5000.
@@ -62,9 +61,9 @@ Server up and running on port 5000.
 - populate the `AWS_` variables with your ECR repository, ECS cluster, and ECS service info
 - feel free to generate a random secure string for `AUTH_TOKEN_SECRET` as well
 ##### 10. Run migrations on production DB
-- `yarn run setup:prod` 
+- `yarn setup:prod` 
 ##### 11. Deploy to ECR repository
-- `sh deployment/prod-deploy-aws.sh`
+- `yarn deploy`
 - press `q` when the cluster schema appears once deployment is done to return to your terminal
 ##### 12. Monitor ECS service task and verify ELB DNS 
 - From your [ECS Cluster dashboard](https://us-east-2.console.aws.amazon.com/ecs/home?region=us-east-2#/clusters), navigate into your service and open the **Tasks** tab. From here, you can wait for your task to reach "RUNNING" status and/or click into the task and view logs.
