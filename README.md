@@ -25,7 +25,7 @@
 - `createdb my_database_name`
 ##### 6. Initialize Environment Variables (local)
 - `cp .env.example .env.local`
-- update `DB_NAME` in `.env.local` to be the name of your database in **#3**
+- update `DB_NAME` in `.env.local` to be the name of your database in **#5**
 ##### 7. Run Database Migrations
 - `yarn run setup:local`
 ##### 8. Start Local Server
