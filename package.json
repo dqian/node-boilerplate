@@ -29,6 +29,7 @@
     "express-promise-router": "3.0.3",
     "helmet": "3.21.2",
     "http-status": "1.4.2",
+    "logdna-winston": "^2.3.2",
     "logform": "2.1.2",
     "morgan": "1.9.1",
     "nodemon": "2.0.2",

@@ -1,6 +1,7 @@
 import { TransformableInfo } from 'logform'
 import { createLogger, format, LoggerOptions, transports } from 'winston'
 import config from '~/config'
+import * as LogDNAWinston from 'logdna-winston'
 
 const formatParams = (info: TransformableInfo) => {
   const { timestamp, level, message, ...args } = info
@@ -16,24 +17,37 @@ const developmentFormat = format.combine(
   format.printf(formatParams),
 )
 
-const productionFormat = format.combine(format.timestamp(), format.align(), format.printf(formatParams))
+const productionFormat = format.combine(
+  format.timestamp(), 
+  format.align(), 
+  format.printf(formatParams),
+)
+
+const logdnaOptions = {
+  key: config.LOGDNA.KEY,
+  handleExceptions: true,
+  hostname: config.LOGDNA.HOSTNAME,
+  app: config.LOGDNA.APPNAME,
+  env: config.NODE_ENV,
+};
+
+const loggerTransports = [
+  new transports.Console(),
+]
 
 let loggerOptions: LoggerOptions
 if (config.NODE_ENV === 'production') {
   loggerOptions = {
     format: productionFormat,
-    level: config.LOGGING.LEVEL,
-    transports: [
-      new transports.Console(),
-      // new transports.File({ filename: config.LOGGING.ERROR_FILE, level: 'error' }),
-      // new transports.File({ filename: config.LOGGING.COMBINED_FILE }),
-    ],
+    transports: config.LOGDNA.KEY ? [
+        ...loggerTransports,
+        new LogDNAWinston(logdnaOptions)
+      ] : loggerTransports,
   }
 } else {
   loggerOptions = {
     format: developmentFormat,
-    level: config.LOGGING.LEVEL,
-    transports: [new transports.Console()],
+    transports: loggerTransports,
   }
 }
 
