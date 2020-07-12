@@ -1,5 +1,3 @@
-import * as fs from 'fs'
-import * as https from 'https'
 import * as http from 'http'
 import config from '~/config'
 import './packages/api/auth'
@@ -10,7 +8,7 @@ import server from './server'
 
 const PORT = config.SERVER_PORT || '3000'
 
-async function onStart(): Promise<any> {
+async function onStart(): Promise<void> {
   try {
     // initialize database connection
     await getConnection()

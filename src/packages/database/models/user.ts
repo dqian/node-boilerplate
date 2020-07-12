@@ -1,6 +1,11 @@
 // tslint:disable:variable-name
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Timestamp, getConnection, Unique, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Timestamp, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm'
 import config from '~/config'
+
+export interface IUserInfo {
+  id: string
+  email: string
+}
 
 @Entity(`${config.DB.MAIN_SCHEMA}.users`)
 export class User extends BaseEntity {
@@ -10,19 +15,19 @@ export class User extends BaseEntity {
   @Column({ type: "varchar", length: 255, unique: true })
   public email: string
 
-  @Column({ type: "varchar", length: 255 })
-  public password_hash: string
+  @Column({ name: "password_hash", type: "varchar", length: 255 })
+  public passwordHash: string
 
-  @CreateDateColumn()
-  public created_at: Timestamp
+  @CreateDateColumn({ name: "created_at" })
+  public createdAt: Timestamp
 
-  @UpdateDateColumn()
-  public updated_at: Timestamp
+  @UpdateDateColumn({ name: "updated_at" })
+  public updatedAt: Timestamp
 
-  @DeleteDateColumn()
-  public deleted_at: Timestamp
+  @DeleteDateColumn({ name: "deleted_at" })
+  public deletedAt: Timestamp
 
-  public info() {
+  public info(): IUserInfo {
     return {
       id: this.id,
       email: this.email,

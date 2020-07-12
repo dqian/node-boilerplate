@@ -77,7 +77,9 @@ Server up and running on port 5000.
 ```
 
 ## Logging
-We leverage [Winston](https://github.com/winstonjs/winston#readme) as a logger, which supports a variety of transports. For development, we simply output to the console. For production, LogDNA (which has a basic free tier) is already preconfigured and only requires an ingestion key (`LOGDNA_KEY` in `.env.production`) to enable.
+We leverage [Winston](https://github.com/winstonjs/winston#readme) as a logger, which supports a variety of transports. 
+- For development, we simply output to the console. 
+- For production, LogDNA (which has a basic free tier) is already preconfigured and only requires an ingestion key (`LOGDNA_KEY` in `.env.production`) to enable.
 
 ## Resources
 - [original boilerplate](https://github.com/leonardorb/backend-postgres-typescript-node-express)

@@ -26,10 +26,9 @@ const productionFormat = format.combine(
 const logdnaOptions = {
   key: config.LOGDNA.KEY,
   handleExceptions: true,
-  hostname: config.LOGDNA.HOSTNAME,
   app: config.LOGDNA.APPNAME,
   env: config.NODE_ENV,
-};
+}
 
 const loggerTransports = [
   new transports.Console(),

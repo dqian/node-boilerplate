@@ -9,7 +9,7 @@ import { Unauthorized } from '../helpers/exceptions/unauthorized'
 
 import logger from '~/packages/api/helpers/logging'
 
-interface ErrorResponse {
+interface IErrorResponse {
   code: number
   message: string
   errors?: object
@@ -29,7 +29,7 @@ const convertToException = (err: any): APIException | Forbidden | InvalidParamet
 }
 
 export const handleErrors = (err: any, req: Request, res: Response, next: NextFunction) => {
-  let response: ErrorResponse = {
+  let response: IErrorResponse = {
     code: httpStatus.INTERNAL_SERVER_ERROR,
     message: 'Something bad happened.',
   }

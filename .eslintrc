@@ -9,6 +9,13 @@
   ],
   "rules": {
     "semi": ["error", "never"],
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/interface-name-prefix": [
+      "error",
+      {
+          "prefixWithI": "always"
+      }
+    ],
     "@typescript-eslint/member-delimiter-style": [
       "error",
       {
@@ -20,5 +27,9 @@
         }
       }
     ]
-  }
+  },
+  "ignorePatterns": [
+    "src/packages/database/migrations/*",
+    "src/__tests__/*"
+  ] 
 }
