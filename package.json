@@ -1,7 +1,7 @@
 {
-  "name": "backend-typescript-pern-stack",
+  "name": "node-boilerplate",
   "version": "1.0.0",
-  "description": "Backend TypeScript PERN Stack",
+  "description": "Node Boilerplate (PostgreSQL, Typescript, Node.js, Express.js)",
   "scripts": {
     "dev": "NODE_ENV=local nodemon",
     "prod": "NODE_ENV=production node -r ts-node/register -r tsconfig-paths/register ./build/src/index.js",

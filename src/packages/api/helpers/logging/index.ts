@@ -51,4 +51,11 @@ if (config.NODE_ENV === 'production') {
   }
 }
 
+export enum LogLevel {
+  Info = 'info',
+  Debug = 'debug',
+  Warn = 'warn',
+  Error = 'error',
+}
+
 export default createLogger(loggerOptions)

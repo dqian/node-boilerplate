@@ -12,18 +12,19 @@ import config from '~/config'
 import { handleErrors } from '~/packages/api/middlewares/error'
 import router from '~/packages/api/router'
 import * as passport from "passport";
+import { LogLevel } from './packages/api/helpers/logging'
 
 const app = express()
 
 app.use(
-  morgan(config.LOGGING.TYPE, {
+  morgan(LogLevel.Warn, {
     skip: (req: Request, res: Response) => res.statusCode < httpStatus.BAD_REQUEST,
     stream: process.stderr,
   }),
 )
 
 app.use(
-  morgan(config.LOGGING.TYPE, {
+  morgan(LogLevel.Error, {
     skip: (req: Request, res: Response) => res.statusCode >= httpStatus.BAD_GATEWAY,
     stream: process.stdout,
   }),
