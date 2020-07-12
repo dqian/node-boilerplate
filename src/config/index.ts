@@ -9,7 +9,7 @@ dotEnvSafe.config({
   path: path.resolve(process.cwd(), envPath),
 })
 
-interface Config {
+interface IConfig {
   readonly AUTH: {
     readonly TOKEN_SECRET: string
     readonly TOKEN_EXPIRATION_TIME: string
@@ -23,11 +23,10 @@ interface Config {
     readonly PORT: number
     readonly USER: string
   }
-  readonly LOGGING: {
-    readonly TYPE: string
-    readonly LEVEL: string
-    readonly ERROR_FILE: string
-    readonly COMBINED_FILE: string
+  readonly LOGDNA: {
+    readonly KEY: string
+    readonly HOSTNAME: string
+    readonly APPNAME: string
   }
   readonly NODE_ENV: string
   readonly SERVER_PORT: number
@@ -43,15 +42,14 @@ const {
   DB_PORT,
   DB_NAME,
   DB_USER,
-  LOGGING_COMBINED_FILE,
-  LOGGING_ERROR_FILE,
-  LOGGING_LEVEL,
-  LOGGING_TYPE,
+  LOGDNA_KEY,
+  LOGDNA_HOSTNAME,
+  LOGDNA_APPNAME,
   NODE_ENV,
   SERVER_PORT,
 } = process.env
 
-const config: Config = {
+const config: IConfig = {
   AUTH: {
     TOKEN_EXPIRATION_TIME: AUTH_TOKEN_EXPIRATION_TIME,
     TOKEN_SECRET: AUTH_TOKEN_SECRET,
@@ -65,11 +63,10 @@ const config: Config = {
     PORT: parseInt(DB_PORT, 10),
     USER: DB_USER,
   },
-  LOGGING: {
-    COMBINED_FILE: LOGGING_COMBINED_FILE,
-    ERROR_FILE: LOGGING_ERROR_FILE,
-    LEVEL: LOGGING_LEVEL,
-    TYPE: LOGGING_TYPE,
+  LOGDNA: {
+    KEY: LOGDNA_KEY,
+    HOSTNAME: LOGDNA_HOSTNAME,
+    APPNAME: LOGDNA_APPNAME,
   },
   NODE_ENV,
   SERVER_PORT: parseInt(SERVER_PORT, 10),

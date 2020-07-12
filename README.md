@@ -76,12 +76,17 @@ Server up and running on port 5000.
 }
 ```
 
+## Logging
+We leverage [Winston](https://github.com/winstonjs/winston#readme) as a logger, which supports a variety of transports. For development, we simply output to the console. For production, LogDNA (which has a basic free tier) is already preconfigured and only requires an ingestion key (`LOGDNA_KEY` in `.env.production`) to enable.
+
 ## Resources
 - [original boilerplate](https://github.com/leonardorb/backend-postgres-typescript-node-express)
 - [TypeORM](https://github.com/typeorm/typeorm)
 - [Passport](http://www.passportjs.org/)
 - [Passport-JWT](https://itnext.io/implementing-json-web-tokens-passport-js-in-a-javascript-application-with-react-b86b1f313436)
 - [AWS ECR/ECS Deployment](https://dev.to/mubbashir10/containerize-react-app-with-docker-for-production-572b)
+- [Winston](https://github.com/winstonjs/winston#readme)
+- [LogDNA](https://docs.logdna.com/docs)
 
 ------
 ### OLD README BELOW
