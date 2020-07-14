@@ -22,12 +22,6 @@ async function onStart(): Promise<void> {
   console.log(`Server up and running on port ${PORT}.`)
 }
 
-// const options = {
-//   cert: fs.readFileSync(`${__dirname}/../server.cert`, 'utf8'),
-//   key: fs.readFileSync(`${__dirname}/../server.key`, 'utf8'),
-// };
-
 const currentServer = http.createServer({}, server)
-// const currentServer = https.createServer(options, server)
 
 currentServer.listen(PORT, onStart)
