@@ -76,7 +76,8 @@ Server up and running on port 5000.
 }
 ```
 
-### Domain and SSL
+## Domain and SSL
+- Ideally, we will put our node server behind a subdomain like `api.my-domain.com`.
 - [WIKI: Domain and SSL](https://github.com/dqian/node-boilerplate/wiki/Domain-and-SSL)
 
 ## Logging
