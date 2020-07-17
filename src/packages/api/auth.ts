@@ -121,7 +121,7 @@ export const requireAuth = () => {
         req.user = user
         next()
       } else {
-        console.log(err)
+        console.log("MISSING AUTHENTICATION")
         res.status(httpStatus.UNAUTHORIZED).send()
       }
     })(req, res, next)
