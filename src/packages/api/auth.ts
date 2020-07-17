@@ -6,7 +6,7 @@ import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
 import { getConnection } from 'typeorm'
 import { User } from '../database/models/user'
 import { normalizeEmail } from '~/utils/normalize-email'
-import httpStatus from 'http-status'
+import * as httpStatus from 'http-status'
 
 const BCRYPT_SALT_ROUNDS = 12
 const JWT_AUTH_HEADER = "JWT"
