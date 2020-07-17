@@ -110,3 +110,19 @@ passport.use(
     }
   }),
 )
+
+// auth middleware
+export const requireAuth = () => { 
+  return (req, res, next) => {
+    passport.authenticate(PassportAction.JWT, { session: false }, (err, user: User, info) => {
+      console.log(user)
+      if (!err && user) {
+        req.user = user
+        next()
+      } else {
+        console.log(err)
+        res.status(httpStatus.UNAUTHORIZED).send()
+      }
+    })(req, res, next)
+  }
+}
