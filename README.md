@@ -103,6 +103,17 @@ We leverage [Winston](https://github.com/winstonjs/winston#readme) as a logger, 
 
 This repo is a boilerplate project starter built with TypeScript for a PostgreSQL / Express.js / Node.js backend service. You can plug-in any other frontend library seamlessly.
 
+Setting up the RDS DB from the CLI (Delete later)
+`aws rds create-db-instance --db-instance-identifier node-boilerplate-db-instance --master-username postgres --master-user-password password --port 5432 --engine postgres --engine-version 11 --db-instance-class db.m5.large --allocated-storage 20`
+
+Creating a stack via CloudFormation w/CLI (delete this section later):
+`aws cloudformation create-stack --stack-name node-boilerplate-cluster --template-body file://./deployment/ecs.yml --capabilities CAPABILITY_NAMED_IAM --parameters ParameterKey=VpcId,ParameterValue=<vpc-id> ParameterKey=SubnetIds,ParameterValue=<subnet-id>\\,<subnet-id>`
+
+Notes:
+- Make sure to set the prod server to port 80 in the .env.production file
+- Make sure to open up your security groups properly
+- Set your image id in the ecs.yml file
+
 ## Technologies Used
 
 - [PostgreSQL](https://www.postgresql.org/) - The World's Most Advanced Open Source Relational Database

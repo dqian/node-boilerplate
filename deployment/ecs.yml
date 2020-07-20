@@ -3,7 +3,7 @@ Parameters:
   VpcId:
     Type: AWS::EC2::VPC::Id
     Description: Select a VPC that allows instances access to the Internet.
-  SubnetId:
+  SubnetIds:
     Type: List<AWS::EC2::Subnet::Id>
     Description: Select at two subnets in your selected VPC.
 Resources:
@@ -31,7 +31,8 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: ContainerSecurityGroup
-      GroupDescription: Security group for NGINX container
+      GroupDescription: Security group for this node container
+      VpcId: !Ref VpcId
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
@@ -45,7 +46,7 @@ Resources:
       LoadBalancerAttributes:
       - Key: idle_timeout.timeout_seconds
         Value: 30
-      Subnets: !Ref SubnetId
+      Subnets: !Ref SubnetIds
       SecurityGroups:
         - !GetAtt ContainerSecurityGroup.GroupId
   ALBListener:
@@ -95,7 +96,7 @@ Resources:
       ExecutionRoleArn: !Ref ExecutionRole
       ContainerDefinitions:
         - Name: deployment-node-boilerplate-container
-          Image: 504166309185.dkr.ecr.us-west-2.amazonaws.com/dqian/node-boilerplate
+          Image: 504166309185.dkr.ecr.us-west-2.amazonaws.com/node-boilerplate
           PortMappings:
             - ContainerPort: 80
           LogConfiguration:
@@ -123,6 +124,6 @@ Resources:
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
-          Subnets: !Ref SubnetId
+          Subnets: !Ref SubnetIds
           SecurityGroups:
             - !GetAtt ContainerSecurityGroup.GroupId
