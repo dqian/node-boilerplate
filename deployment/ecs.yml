@@ -1,11 +1,8 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Parameters:
-  VpcId:
-    Type: AWS::EC2::VPC::Id
-    Description: Select a VPC that allows instances access to the Internet.
-  SubnetIds:
-    Type: List<AWS::EC2::Subnet::Id>
-    Description: Select at two subnets in your selected VPC.
+  ImageUri:
+    Type: String
+    Description: the uri for the container image repo
 Resources:
   Cluster:
     Type: AWS::ECS::Cluster
@@ -29,24 +26,113 @@ Resources:
         - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
   ContainerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
+    DependsOn: VPC
     Properties:
       GroupName: ContainerSecurityGroup
       GroupDescription: Security group for this node container
-      VpcId: !Ref VpcId
+      VpcId: !Ref VPC
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
           ToPort: 80
           CidrIp: 0.0.0.0/0
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: ECS VPC6
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    DependsOn: VPC
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    DependsOn:
+      - VPC
+      - InternetGateway
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    DependsOn: AttachGateway
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.0.0/24
+      AvailabilityZone: us-west-2a
+      Tags:
+        - Key: Name
+          Value: Public Subnet 1
+
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    DependsOn: AttachGateway
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: us-west-2b
+      Tags:
+        - Key: Name
+          Value: Public Subnet 2
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    DependsOn:
+      - VPC
+      - AttachGateway
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: Public
+
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn:
+      - PublicRouteTable
+      - AttachGateway
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  PublicSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    DependsOn:
+      - PublicRouteTable
+      - PublicSubnet1
+      - AttachGateway
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref PublicRouteTable
+
+  PublicSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    DependsOn:
+      - PublicRouteTable
+      - PublicSubnet2
+    Properties:
+      SubnetId: !Ref PublicSubnet2
+      RouteTableId: !Ref PublicRouteTable
+
   ECSALB:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    DependsOn:
+      - PublicSubnet1
+      - PublicSubnet2
     Properties:
       Name: ECSALB
       Scheme: internet-facing
       LoadBalancerAttributes:
       - Key: idle_timeout.timeout_seconds
         Value: 30
-      Subnets: !Ref SubnetIds
+      Subnets:
+        - !Ref PublicSubnet1
+        - !Ref PublicSubnet2
       SecurityGroups:
         - !GetAtt ContainerSecurityGroup.GroupId
   ALBListener:
@@ -73,7 +159,9 @@ Resources:
       Priority: 1
   ECSTG:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
-    DependsOn: ECSALB
+    DependsOn:
+      - ECSALB
+      - VPC
     Properties:
       HealthCheckIntervalSeconds: 10
       HealthCheckPath: /health
@@ -85,7 +173,7 @@ Resources:
       Protocol: HTTP
       TargetType: ip
       UnhealthyThresholdCount: 2
-      VpcId: !Ref VpcId
+      VpcId: !Ref VPC
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
@@ -96,7 +184,7 @@ Resources:
       ExecutionRoleArn: !Ref ExecutionRole
       ContainerDefinitions:
         - Name: deployment-node-boilerplate-container
-          Image: 504166309185.dkr.ecr.us-west-2.amazonaws.com/node-boilerplate
+          Image: !Ref ImageUri
           PortMappings:
             - ContainerPort: 80
           LogConfiguration:
@@ -110,7 +198,6 @@ Resources:
         - FARGATE
   Service:
     Type: AWS::ECS::Service
-    DependsOn: ALBListener
     Properties:
       ServiceName: deployment-node-boilerplate-service
       Cluster: !Ref Cluster
@@ -124,6 +211,8 @@ Resources:
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
-          Subnets: !Ref SubnetIds
+          Subnets:
+            - !Ref PublicSubnet1
+            - !Ref PublicSubnet2
           SecurityGroups:
             - !GetAtt ContainerSecurityGroup.GroupId

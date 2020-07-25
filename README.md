@@ -107,12 +107,15 @@ Setting up the RDS DB from the CLI (Delete later)
 `aws rds create-db-instance --db-instance-identifier node-boilerplate-db-instance --master-username postgres --master-user-password password --port 5432 --engine postgres --engine-version 11 --db-instance-class db.m5.large --allocated-storage 20`
 
 Creating a stack via CloudFormation w/CLI (delete this section later):
-`aws cloudformation create-stack --stack-name node-boilerplate-cluster --template-body file://./deployment/ecs.yml --capabilities CAPABILITY_NAMED_IAM --parameters ParameterKey=VpcId,ParameterValue=<vpc-id> ParameterKey=SubnetIds,ParameterValue=<subnet-id>\\,<subnet-id>`
+<!-- `aws cloudformation create-stack --stack-name node-boilerplate-cluster --template-body file://./deployment/ecs.yml --capabilities CAPABILITY_NAMED_IAM --parameters ParameterKey=VpcId,ParameterValue=<vpc-id> ParameterKey=SubnetIds,ParameterValue=<subnet-id>\\,<subnet-id>` -->
+
+`aws cloudformation create-stack --stack-name node-boilerplate-cluster --template-body file://./deployment/ecs.yml --capabilities CAPABILITY_NAMED_IAM --parameters ParameterKey=ImageUri,ParameterValue=504166309185.dkr.ecr.us-west-2.amazonaws.com/node-boilerplate`
 
 Notes:
 - Make sure to set the prod server to port 80 in the .env.production file
 - Make sure to open up your security groups properly
 - Set your image id in the ecs.yml file
+- Make sure that the parameter ImageUri is correct, else CloudFormation will hang 5ever
 
 ## Technologies Used
 
