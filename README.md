@@ -80,6 +80,15 @@ Server up and running on port 5000.
 - Ideally, we will put our node server behind a subdomain like `api.my-domain.com`.
 - [WIKI: Domain and SSL](https://github.com/dqian/node-boilerplate/wiki/Domain-and-SSL)
 
+## Auto-deploy
+Note, right now this doesn't support custom naming. That's TODO though.
+
+### Setup
+- `python3 ./deployment/setup_aws.py`
+
+### Cleanup
+- `python3 ./deploymen/cleanup_aws.py`
+
 ## Logging
 We leverage [Winston](https://github.com/winstonjs/winston#readme) as a logger, which supports a variety of transports. 
 - For development, we simply output to the console. 
