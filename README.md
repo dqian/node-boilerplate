@@ -80,6 +80,15 @@ Server up and running on port 5000.
 - Ideally, we will put our node server behind a subdomain like `api.my-domain.com`.
 - [WIKI: Domain and SSL](https://github.com/dqian/node-boilerplate/wiki/Domain-and-SSL)
 
+## Auto-deploy
+Auto-deploy is a set of scripts that will automatically setup the environement on AWS for you.
+
+### Setup
+- `python3 ./deployment/setup_aws.py`
+
+### Cleanup
+- `python3 ./deploymen/cleanup_aws.py`
+
 ## Logging
 We leverage [Winston](https://github.com/winstonjs/winston#readme) as a logger, which supports a variety of transports. 
 - For development, we simply output to the console. 
@@ -102,6 +111,11 @@ We leverage [Winston](https://github.com/winstonjs/winston#readme) as a logger, 
 ## Overview
 
 This repo is a boilerplate project starter built with TypeScript for a PostgreSQL / Express.js / Node.js backend service. You can plug-in any other frontend library seamlessly.
+
+### Gotchas (if setting up manually):
+- Make sure to set the prod server to port 80 in the .env.production file
+- Make sure to open up your security groups properly
+- Make sure that the parameter ImageUri is correct, else CloudFormation will hang 5ever
 
 ## Technologies Used
 

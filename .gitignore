@@ -8,6 +8,7 @@ temp/
 *.log
 .env
 .env.*
+!.env.template
 !.env.example
 *.cert
 *.key
